@@ -37,6 +37,14 @@ public class EscapeApp {
         System.out.println("You're in the main menu");
         System.out.println("What do you want to do next?");
         System.out.println("(1) Start new game");
+        if(isGameRunning()) {
+            System.out.println("(2) Resume game");
+            System.out.println("(3) Save game");
+        }
+        if(hasSavedGame()) {
+            System.out.println("(4) Load game");
+            System.out.println("(5) Delete saved game");
+        }
         System.out.println("(6) Quit");
         System.out.println("");
         System.out.println("Please choose a number between 1 and 6: ");
@@ -62,8 +70,16 @@ public class EscapeApp {
                 this.startGame();
                 break;
             case "2":
+                this.resumeGame();
+            case "3":
+                this.hasSavedGame();
+                this.loadGame();
+            case "4":
+                this.saveGame();
+            case "5":
+                this.hasSavedGame();
+                this.deleteGame();
                 break;
-            // ...
             case "6":
                 break;
             default:
