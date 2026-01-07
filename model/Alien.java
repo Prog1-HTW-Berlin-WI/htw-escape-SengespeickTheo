@@ -1,4 +1,8 @@
-package model;
+
+/* 
+@author Theo Sengespeick
+@auhor Leon von Kielpinski 
+*/
 
 public abstract class Alien {
 

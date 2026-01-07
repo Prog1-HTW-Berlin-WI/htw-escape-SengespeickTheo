@@ -1,4 +1,8 @@
-package model;
+
+/* 
+@author Theo Sengespeick
+@auhor Leon von Kielpinski 
+*/
 
 import java.io.Serial;
 import java.io.Serializable;

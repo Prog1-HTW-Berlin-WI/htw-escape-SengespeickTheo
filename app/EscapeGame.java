@@ -1,7 +1,10 @@
-package app;
-
 import model.Hero;
 import model.HTWRoom;
+
+/* 
+@author Theo Sengespeick
+@auhor Leon von Kielpinski 
+*/
 
 public class EscapeGame {
     private final Hero hero;
