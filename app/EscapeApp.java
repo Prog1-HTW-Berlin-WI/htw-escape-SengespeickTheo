@@ -30,7 +30,9 @@ public class EscapeApp {
             System.out.println("====================");
         }
     }
-
+    /**
+     * zeigt das Hauptmenü auf dem Terminal an
+     */
     private void showMainMenu() {
         System.out.println("You're in the main menu");
         System.out.println("What do you want to do next?");
@@ -39,14 +41,21 @@ public class EscapeApp {
         System.out.println("");
         System.out.println("Please choose a number between 1 and 6: ");
     }
-
+    /**
+     * liest eine Benutzereingabe vom Terminal ein
+     * @return die Benutzereingabe als String
+     */    
     private String readUserInput() {
         Scanner scanner = new Scanner(System.in);
         String userInput = scanner.nextLine();
         // TBD
         return userInput;
     }
-
+    /**
+     * verarbeitet die Benutzereingabe und führt gewünschte Aktion aus.
+     * Falls es nicht funktioniert, wird eine Fehlermeldung ausgegeben.
+     * @param input die Benutzereingabe als String.
+     */
     private void handleUserInput(String input) {
         switch (input) {
             case "1":
@@ -62,23 +71,35 @@ public class EscapeApp {
                 break;
         }
     }
-
+    /**
+     * startet ein neues Spiel
+     * erstellt neues Objekt der Klasse EscapeGame
+     */
     private void startGame() {
         this.game = new EscapeGame();
         resumeGame();
     }
-
+    /**
+     * setzt ein laufendes Spiel fort
+     */
     private void resumeGame() {
         this.game.setGameRunning(true);
         this.game.run();
     }
-
+    /**
+     * löscht die gespeicherte Spielstanddatei, falls eine vorhanden ist.
+     * Bestätigung wird auf dem Terminal ausgegeben.
+    */
     private void deleteGame() {
         if (new File(SAVE_FILE_NAME).delete()) {
             System.out.println("Game deleted!");
         }
     }
-
+    /**
+     * speichert den aktuellen Spielstand in einer Datei
+     * @return true, wenn das Spiel erfolgreich gespeichert wurde, sonst false
+     * Bestätigung oder Fehler wird auf dem Terminal ausgegeben.
+     */
     private void saveGame() {
         try (FileOutputStream fos = new FileOutputStream(SAVE_FILE_NAME);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
@@ -90,7 +111,10 @@ public class EscapeApp {
         }
         System.out.println("Game saved!");
     }
-
+    /**
+     * lädt ein gespeichertes Spiel aus einer Datei und gibt Bestätigung auf dem Terminal aus.
+     * Wenn es nicht funktioniert, wird eine Fehlermeldung ausgegeben.
+     */
     private void loadGame() {
         try (FileInputStream fis = new FileInputStream(SAVE_FILE_NAME);
              ObjectInputStream ois = new ObjectInputStream(fis)) {
@@ -100,15 +124,24 @@ public class EscapeApp {
             System.err.println("Something went wrong while loading the game: " + ex.getMessage());
         }
     }
-
+    /**
+     * gibt zurück, ob ein Spiel läuft
+     * @return true, wenn ein Spiel läuft, sonst false
+     */
     private boolean isGameRunning() {
         return game != null;
     }
-
+    /**
+     * gibt zurück, ob das Spiel beendet ist
+     * @return true, wenn das Spiel beendet ist, sonst false
+     */
     private boolean isGameFinished() {
         return game != null && game.isGameFinished();
     }
-
+    /**
+     * prüft, ob eine gespeicherte Spielstanddatei existiert
+     * @return true, wenn eine gespeicherte Spielstanddatei existiert, sonst false
+     */
     private boolean hasSavedGame() {
         return new File(SAVE_FILE_NAME).exists();
     }
