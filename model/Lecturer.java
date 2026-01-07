@@ -1,7 +1,8 @@
 
-/* 
-@author Theo Sengespeick
-@auhor Leon von Kielpinski 
+/**
+* Namen der Autoren des Projekts
+* @author Theo Sengespeick
+* @auhor Leon von Kielpinski 
 */
 
 import java.io.Serializable;

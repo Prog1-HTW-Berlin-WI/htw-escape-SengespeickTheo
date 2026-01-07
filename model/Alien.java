@@ -1,9 +1,9 @@
 
-/* 
-@author Theo Sengespeick
-@auhor Leon von Kielpinski 
+/**
+* Namen der Autoren des Projekts
+* @author Theo Sengespeick
+* @auhor Leon von Kielpinski 
 */
-
 public abstract class Alien {
 
     // Bitte serialVersionUID beibehalten, damit die Klasse bei der

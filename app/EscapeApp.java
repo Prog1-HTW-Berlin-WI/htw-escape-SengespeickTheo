@@ -5,9 +5,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
-/* 
-@author Theo Sengespeick
-@auhor Leon von Kielpinski 
+/**
+* Namen der Autoren des Projekts
+* @author Theo Sengespeick
+* @auhor Leon von Kielpinski 
 */
 
 public class EscapeApp {
