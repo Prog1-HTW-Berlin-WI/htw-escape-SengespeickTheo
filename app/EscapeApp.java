@@ -72,13 +72,16 @@ public class EscapeApp {
             case "2":
                 this.resumeGame();
             case "3":
-                this.hasSavedGame();
-                this.loadGame();
+                if(this.hasSavedGame()) {
+                    this.loadGame();
+                }
+                break;
             case "4":
                 this.saveGame();
             case "5":
-                this.hasSavedGame();
-                this.deleteGame();
+                if(this.hasSavedGame()) {
+                    this.deleteGame();
+                }
                 break;
             case "6":
                 break;
