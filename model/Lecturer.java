@@ -13,4 +13,15 @@ public class Lecturer implements Serializable {
     // Speicherung als Datei (Serialisierung) und beim Laden (Deserialisierung)
     // konsistent bleibt und Versionierungsprobleme vermieden werden.
     private static final long serialVersionUID = 540082607047283589L;
+
+    public String name;
+    public boolean hasSigned;
+
+    public boolean isReadyToSign(){
+
+    }
+
+    public boolean sign(){
+        
+    }
 }

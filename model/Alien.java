@@ -10,4 +10,17 @@ public abstract class Alien {
     // Speicherung als Datei (Serialisierung) und beim Laden (Deserialisierung)
     // konsistent bleibt und Versionierungsprobleme vermieden werden.
     private static final long serialVersionUID = 1729389822767173584L;
+
+    public String name;
+    public int lifePoints;
+    public boolean friendly;
+    public String greeting;
+
+    public int takeDamage(){
+
+    }
+
+    public boolean isDefeated(){
+
+    }
 }
