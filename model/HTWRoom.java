@@ -18,4 +18,13 @@ public class HTWRoom implements Serializable {
     public String identifier;
     public String description;
     public Lecturer lecturer;
+
+    /**
+     * Konstruktor für HTWRoom
+     */
+    public HTWRoom(String identifier, String description, Lecturer lecturer){
+        this.identifier = identifier;
+        this.description = description;
+        this.lecturer = lecturer;
+    }
 }

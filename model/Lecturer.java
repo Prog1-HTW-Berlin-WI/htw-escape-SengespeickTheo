@@ -6,6 +6,7 @@
 */
 
 import java.io.Serializable;
+import java.util.Random;
 
 public class Lecturer implements Serializable {
 
@@ -17,11 +18,32 @@ public class Lecturer implements Serializable {
     public String name;
     public boolean hasSigned;
 
+    /**
+     * Konstruktor für Lecturer
+     */
+    public Lecturer(String name){
+        this.name = name;
+        this.hasSigned = false;
+    }
+    
+    /**
+     * Methode, die überprüft, ob Lecturer bereit ist, den Laufzettel zu unterschreiben.
+     */
     public boolean isReadyToSign(){
-
+        Random random = new Random();
+        int zufallszahl = random.nextInt(100) + 1;
+        if(zufallszahl <= 70) {
+            return true;
+        } else {
+            System.out.println("I don't have time for you right now. Come back later again.")
+            return false;
+        }
     }
 
+    /**
+     * Methode, die den Laufzettel vom Lecturer unterschreiben lässt.
+     */
     public boolean sign(){
-        
+        return hasSigned = true;
     }
 }
