@@ -35,6 +35,10 @@ public class Hero implements Serializable {
      */
     public int takeDamage(int amount){
         this.healthPoints -= amount;
+        if(this.healthPoints <= 0) {
+            System.out.println("You have been defeated!");
+            this.healthPoints = 0;
+        }
         return this.healthPoints;
     }
    
@@ -52,6 +56,8 @@ public class Hero implements Serializable {
                 System.out.println("You reached your maximum points of health. Choose a small rest instead.");
                 this.healthPoints -= 10;
             }
+
+            // RUNDE WIRD BEI SPIELMENÜ NOCH HINZUGEFÜGT
         } else {
             this.healthPoints += 3;
             if(this.healthPoints > 50) {
@@ -70,8 +76,10 @@ public class Hero implements Serializable {
         Random random = new Random();
         int zufallszahl = random.nextInt(100) + 1;
         if(zufallszahl <= 42) {
+            System.out.println("You have successfully fled the battle!");
             return true;
         } else {
+            System.out.println("Ahhh, your attempt to flee has failed! You have to fight now!");
             return false;
         }
     }
@@ -102,6 +110,12 @@ public class Hero implements Serializable {
      * @param lecturer
      */
     public void signExerciseLeader(Lecturer lecturer){
+        for(int i = 0; i < signedExerciseLeaders.length; i++) {
+            if(signedExerciseLeaders[i] == lecturer) {
+                System.out.println("You already have my signature. Search for another lecturer to sign.");
+                break;
+            }
+        }
         for(int i = 0; i < signedExerciseLeaders.length; i++) {
             if(signedExerciseLeaders[i] == null) {
                 signedExerciseLeaders[i] = lecturer;
