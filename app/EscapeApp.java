@@ -95,9 +95,31 @@ public class EscapeApp {
      * erstellt neues Objekt der Klasse EscapeGame
      */
     private void startGame() {
-        this.game = new EscapeGame();
-        resumeGame();
+        if(this.game != null) {
+            while (true) {
+                System.out.println("A game already exists. If you haven't saved it yet, it will be lost. Do you want to start a new one anyway? (y/n)");
+                String answer = readUserInput();
+                if(answer.equalsIgnoreCase("n")) {
+                    return;
+                }
+                if(answer.equalsIgnoreCase("y")) {
+                    break;
+                }
+                System.out.println("Invalid input. Please enter 'y' or 'n'.");
+            }
+            System.out.println("Please enter your hero's name:");
+            String name = readUserInput();
+            Hero hero = new Hero(name);
+            this.game = new EscapeGame(hero);
+            introGame();
+        }
+        System.out.println("Please enter your hero's name:");
+        String name = readUserInput();
+        Hero hero = new Hero(name);
+        this.game = new EscapeGame(hero);
+        introGame();
     }
+    
     /**
      * setzt ein laufendes Spiel fort
      */
@@ -165,4 +187,47 @@ public class EscapeApp {
         return new File(SAVE_FILE_NAME).exists();
     }
 
+    private void introGame() {
+        System.out.println("It's 8 am in the morning and you are packing your backpack for university");
+        System.out.println("You're still feeling a little bit tired, but you need to be early for your first lecture.");
+        System.out.println("After half an hour of traveling by tram, you arrive near the HTW to get a morning coffee.");
+        System.out.println("While entering Building A you feel that something is off...");
+        System.out.println("Suddenly, a big snail appears right in front of you. In shock, you spill your whole coffee on yourself.");
+        System.out.println("What do you want to do now? (1) Try to run away or (2) Talk to the snail?");
+        while (true) {
+                String answer = readUserInput();
+                if(answer.equalsIgnoreCase("1")) {
+                    System.out.println("");
+                    System.out.println("You try to run away, but the Door of Building A is locked! In panic you realise, that the snail is coming towards you.");
+                    break;
+                }
+                if(answer.equalsIgnoreCase("2")) {
+                    System.out.println("");
+                    System.out.println(game.getHero().name + ": 'Who are you? What are you doing here?'");
+                    System.out.println("Snail: 'Me? Ohh I'm a normal snail, just a little bit bigger than usual.");
+                    System.out.println(game.getHero().name + ": Are you dangerous?");
+                    break;
+                }
+                System.out.println("Invalid input. Please enter '1' or '2' in order to continue with the game.");
+        }
+        System.out.println("");
+        System.out.println("Snail: 'Ohh, don't worry. I'm not dangerous at all. In fact, I'm here to help you escape this place. Let me explain...");
+        System.out.println("Aliens have invaded the HTW and taken over the building. It's completely locked down and you can't leave.");
+        System.out.println("You have to find all the five lecturers, who are also trapped here, and get them to sign your escape paper.");
+        System.out.println("Only when you have all five signatures, you will be able to find Prof. Majuntke, who can help you escape this place.");
+        System.out.println("But be careful! You only have 24 hours (= rounds) before its too late! There are aliens lurking around the building.");
+        System.out.println("Some of them are friendly and will not harm you, but some are dangerous and will not let you pass without a fight. Good luck!'");
+        System.out.println("");
+        System.out.println("You will now get into the game menu. Each time you press 'explore HTW' you will spend one hour (= round).");
+        System.out.println("There will be different scenarios each time you explore and you will have to take action based on the situation.");
+        System.out.println("Do you wan't to continue? (y)... You have no other choice... Press (y)");
+        while (true) {
+            String answer = readUserInput();
+            if(answer.equalsIgnoreCase("y")) {
+                resumeGame();
+                break;
+            }
+        System.out.println("Sorry, you will have to take the adventure. Press (y) in order to continue.");
+    }
+}
 }

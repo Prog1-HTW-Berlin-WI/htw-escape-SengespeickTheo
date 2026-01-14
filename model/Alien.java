@@ -16,11 +16,29 @@ public abstract class Alien {
     public boolean friendly;
     public String greeting;
 
-    public int takeDamage(){
-
+    /**
+     * Methode, die dem Alien Schaden zufügt und LP abzieht.
+     * @param damage
+     * @return Nachricht mit angerichtetem Schaden und restlichen LP
+     */
+    public String takeDamage(int damage){
+        lifePoints -= damage;
+        if(lifePoints < 0) {
+            lifePoints = 0;
+        }
+        return name + " lost " + damage + " life points and has now " + lifePoints + " life points left.";
     }
 
+    /**
+     * Methode, die zurückgibt, ob das Alien besiegt wurde.
+     * @return true, wenn besiegt; false, wenn nicht besiegt
+     */
     public boolean isDefeated(){
-
+        if(lifePoints <= 0) {
+            System.out.println(name + " has been defeated!");
+            return true;
+        } else {
+            return false;
+        }
     }
 }

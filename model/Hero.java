@@ -4,7 +4,6 @@
 * @author Theo Sengespeick
 * @auhor Leon von Kielpinski 
 */
-import java.util.Random;
 import java.io.Serializable;
 
 public class Hero implements Serializable {
@@ -35,8 +34,9 @@ public class Hero implements Serializable {
      */
     public int takeDamage(int amount){
         this.healthPoints -= amount;
+        System.out.println("You took " + amount + " points of damage!");
         if(this.healthPoints <= 0) {
-            System.out.println("You have been defeated!");
+            System.out.println("Your health points reached 0. You have been defeated!");
             this.healthPoints = 0;
         }
         return this.healthPoints;
@@ -51,19 +51,20 @@ public class Hero implements Serializable {
      */
     public void regenerate(boolean longRest){
         if(longRest) {
-            this.healthPoints += 10;
             if(this.healthPoints > 50) {
                 System.out.println("You reached your maximum points of health. Choose a small rest instead.");
                 this.healthPoints -= 10;
             }
-
+            this.healthPoints += 10;
+            System.out.println("Ahh, finally a rest. You regained 10 health points. Try not to lose them this time...");
             // RUNDE WIRD BEI SPIELMENÜ NOCH HINZUGEFÜGT
         } else {
-            this.healthPoints += 3;
             if(this.healthPoints > 50) {
                 System.out.println("You reached your maximum points of health. You can't rest any further.");
                 this.healthPoints -= 3;
             }
+            this.healthPoints += 3;
+            System.out.println("A short break can do wonders. You regained 3 health points.");
         }
     }
 
@@ -73,13 +74,17 @@ public class Hero implements Serializable {
      * @return ob Flucht erfolgreich verlaufen ist.
      */
     public boolean flee(){
-        Random random = new Random();
-        int zufallszahl = random.nextInt(100) + 1;
+        int zufallszahl = (int) (Math.random() * 100) + 1;
         if(zufallszahl <= 42) {
             System.out.println("You have successfully fled the battle!");
             return true;
         } else {
-            System.out.println("Ahhh, your attempt to flee has failed! You have to fight now!");
+            int zufallszahl2 = (int) (Math.random() * 100) + 1;
+            if(zufallszahl2 <70) {
+            System.out.println("Ahh, your attempt to flee has failed! You have to fight now!");
+            } else {
+                System.out.println("Bad try. Seems like you have to fight now!");
+            }
             return false;
         }
     }
@@ -92,15 +97,17 @@ public class Hero implements Serializable {
      * @return hinzugefügten Schaden
      */
     public int attack(){
-        Random random = new Random();
-        int zufallszahl = random.nextInt(100) + 1;
+        int zufallszahl = (int) (Math.random() * 100) + 1;
         if(zufallszahl <= 13) {
+            System.out.println("Your attack missed! You dealt no damage.");
             return 0;
         }
         else if(zufallszahl >=14 && zufallszahl <=26){
+            System.out.println("Great hit! You dealt " + (int) ((experiencePoints * 2.3 + 1)*2) + " points of damage.");
             return (int) ((experiencePoints * 2.3 + 1))*2;
         }
         else {
+            System.out.println("You dealt " + (int) (experiencePoints * 2.3 + 1) + " points of damage.");
             return (int) (experiencePoints * 2.3 + 1);
         }
     }
@@ -119,6 +126,11 @@ public class Hero implements Serializable {
         for(int i = 0; i < signedExerciseLeaders.length; i++) {
             if(signedExerciseLeaders[i] == null) {
                 signedExerciseLeaders[i] = lecturer;
+                int zufallszahl = (int) (Math.random() * 100) + 1;
+                if(zufallszahl <30) {
+                    System.out.println("You really want my signature? Fine... here you go.");
+                } else {
+                    System.out.println("Alright, here's my signature. Good luck with your escape!");
                 break;
             }
         }
@@ -136,6 +148,7 @@ public class Hero implements Serializable {
      */
     public void addExperiencePoints(int experiencePoints){
         this.experiencePoints += experiencePoints;
+        System.out.println("You gained " + experiencePoints + " experience points!");
     }
     /**
      * Methode, die zurück gibt, ob der Hero noch handlungsfähig ist.

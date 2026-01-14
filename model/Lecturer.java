@@ -28,14 +28,21 @@ public class Lecturer implements Serializable {
     
     /**
      * Methode, die überprüft, ob Lecturer bereit ist, den Laufzettel zu unterschreiben.
+     * 70% Chance, dass er bereit ist.
+     * @return true, wenn bereit; false, wenn nicht bereit
      */
     public boolean isReadyToSign(){
-        Random random = new Random();
-        int zufallszahl = random.nextInt(100) + 1;
+        int zufallszahl = (int) (Math.random() * 100) + 1;
         if(zufallszahl <= 70) {
             return true;
         } else {
-            System.out.println("I don't have time for you right now. Come back later again.")
+            int zufallszahl2 = (int) (Math.random() * 100) + 1;
+            if(zufallszahl2 < 75) {
+                System.out.println("Sorry, I'm busy right now. Please come back later.");
+            }
+            else {
+            System.out.println("I don't have time for you right now. Come back later again.");
+            }
             return false;
         }
     }
