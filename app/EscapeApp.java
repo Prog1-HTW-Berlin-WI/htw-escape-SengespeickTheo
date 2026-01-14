@@ -30,6 +30,8 @@ public class EscapeApp {
             System.out.println("====================");
         }
     }
+
+
     /**
      * zeigt das Hauptmenü auf dem Terminal an
      */
@@ -126,6 +128,8 @@ public class EscapeApp {
     private void resumeGame() {
         this.game.setGameRunning(true);
         this.game.run();
+        System.out.println("");
+        gameMenu();
     }
     /**
      * löscht die gespeicherte Spielstanddatei, falls eine vorhanden ist.
@@ -230,4 +234,57 @@ public class EscapeApp {
         System.out.println("Sorry, you will have to take the adventure. Press (y) in order to continue.");
     }
 }
-}
+
+
+        public void gameMenu() {
+            while (true) {
+            System.out.println("");
+            System.out.println("You're now in the game menu.");
+            System.out.println("What do you want to do next?");
+            System.out.println("(1) Explore HTW");
+            System.out.println("(2) Show hero status");
+            System.out.println("(3) Show escape paper");
+            System.out.println("(4) Rest your hero");
+            System.out.println("(5) Back to main menu");
+
+            String answer = readUserInput();
+            if(answer.equals("5")) {
+                return;
+            }
+            handleUserInputGameMenu(answer);
+            }
+    }
+
+        private void handleUserInputGameMenu(String input) {
+        switch (input) {
+                case "1":
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    System.out.println("Do you want to rest for a long time (+10 HP, costs 1 round) or a short time (+3 HP, only once per round)? (l/s) or go back to the game menu (q)");
+                    String answer = readUserInput();
+                    while(true) {
+                        if(answer.equalsIgnoreCase("l")) {
+                            game.getHero().regenerate(true);
+                            break;
+                        } else if(answer.equalsIgnoreCase("s")) {
+                            game.getHero().regenerate(false);
+                            break;
+                        } else if(answer.equalsIgnoreCase("q")) {
+                            break;
+                        } else {
+                            System.out.println("Invalid input. Please enter 'l' or 's' or 'q'.");
+                            answer = readUserInput();
+                        }
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid input. Please choose a correct number between 1 and 5");
+                    break;
+            }
+        }
+    }
+
