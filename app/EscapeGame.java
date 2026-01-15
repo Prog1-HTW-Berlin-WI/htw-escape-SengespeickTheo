@@ -146,6 +146,7 @@ public class EscapeGame {
         private void handleUserInputGameMenu(String input) {
         switch (input) {
                 case "1":
+                    exploreHTW();
                     break;
                 case "2":
                     break;
@@ -178,12 +179,53 @@ public class EscapeGame {
         public void exploreHTW() {
             int zufallszahl = (int) (Math.random() * 100) + 1;
             if(zufallszahl <=20) {
-                // ereignislos
+                eventless();
             } else if(zufallszahl > 20 && zufallszahl <= 72) {
                 // Alien
             } else {
                 // Lecturer
             }
         }
-    }
 
+        public void eventless() {
+            int zufallszahl = (int) (Math.random() * 100) + 1;
+            if(zufallszahl <= 25) {
+                System.out.println("You explored Building B. Sadly you haven't found anything you need. Maybe try somewhere else...");
+            } else if(zufallszahl > 26 && zufallszahl <= 50) {
+                System.out.println("You entered room A241. It's very dark in here... you see a strange silouette that's lurking in the corner. Maybe it's better to turn back, it doesn't seem safe in here...");
+            } else if(zufallszahl > 51 && zufallszahl <= 75) {
+                System.out.println("You want to enter Building C, but the entrance is covered by aliens. Sadly you're not strong enough to beat that many. Maybe try somewhere else...");
+            } else {
+                System.out.println("You see an interesting looking hallway. At the end of it you see a tiny light shimmering, which emits a high pitched sound. You try to approach it, but the closer you come, the worse it gets. Seems like you won't find something here.");
+        }
+    }
+        public void meetAlien(){
+            int zufallszahl = (int) (Math.random() * 100) + 1;
+            if(zufallszahl <= 20) {
+                //Alien1
+            } else if(zufallszahl > 21 && zufallszahl <= 40) {
+                //Alien2
+            } else if(zufallszahl > 41 && zufallszahl <= 60) {
+                //Alien3
+            } else if(zufallszahl > 61 && zufallszahl <= 81) {
+                //Alien4
+            } else {
+                //Alien5
+            }
+        }
+
+        public void meetLecturer(){
+            int zufallszahl = (int) (Math.random() * 100) + 1;
+            if(zufallszahl <= 20) {
+                //Lecturer1
+            } else if(zufallszahl > 21 && zufallszahl <= 40) {
+                //Lecturer2
+            } else if(zufallszahl > 41 && zufallszahl <= 60) {
+                //Lecturer3
+            } else if(zufallszahl > 61 && zufallszahl <= 81) {
+                //Lecturer4
+            } else {
+                //Lecturer5
+            }
+        }
+}

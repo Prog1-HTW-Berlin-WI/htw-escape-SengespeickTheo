@@ -49,7 +49,7 @@ public class EscapeApp {
         }
         System.out.println("(6) Quit");
         System.out.println("");
-        System.out.println("Please choose a number between 1 and 6: ");
+        System.out.println("Please choose a given number: ");
     }
     /**
      * liest eine Benutzereingabe vom Terminal ein
@@ -76,23 +76,39 @@ public class EscapeApp {
                 this.startGame();
                 break;
             case "2":
-                this.resumeGame();
+                if(isGameRunning() == false){
+                    System.out.println("Invalid Input. Please choose a given number.");
+                } else {
+                    this.resumeGame();
+                }
+                break;
             case "3":
-                if(this.hasSavedGame()) {
+                if(isGameRunning() == false) {
+                    System.out.println("Invalid Input. Please choose a given number.");
+                } else if(this.hasSavedGame()) {
                     this.loadGame();
                 }
                 break;
             case "4":
-                this.saveGame();
+                if(isGameRunning() == false && hasSavedGame() == false) {
+                    System.out.println("Invalid Input. Please choose a given number.");
+                } else {
+                    this.saveGame();
+                }
+                break;
             case "5":
+                if(isGameRunning() == false && hasSavedGame() == false) {
+                    System.out.println("Invalid Input. Please choose a given number.");
+                } else {
                 if(this.hasSavedGame()) {
                     this.deleteGame();
+                }
                 }
                 break;
             case "6":
                 break;
             default:
-                System.out.println("Invalid input. Please choose a correct number between 1 and 6");
+                System.out.println("Invalid input. Please choose a given number.");
                 break;
         }
     }
