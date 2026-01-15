@@ -10,6 +10,7 @@ import model.HTWRoom;
 
 
 public class EscapeGame {
+    private EscapeApp app;
     private final Hero hero;
     private final HTWRoom[] rooms = new HTWRoom[5];
     private boolean gameRunning = true;
@@ -17,8 +18,9 @@ public class EscapeGame {
     /**
      * initialisiert einen neuen Helden, HTWRooms, Lecturer und Aliens.
      */
-    public EscapeGame(Hero hero) {
+    public EscapeGame(Hero hero, EscapeApp app) {
         this.hero = hero;
+        this.app = app;
         Lecturer lecturer1 = new Lecturer("Poeser");
         Lecturer lecturer2 = new Lecturer("Gärt");
         Lecturer lecturer3 = new Lecturer("Vaseva");
@@ -74,4 +76,114 @@ public class EscapeGame {
     public Hero getHero() {
         return hero;
     }
+
+    private void introGame() {
+        System.out.println("It's 8 am in the morning and you are packing your backpack for university");
+        System.out.println("You're still feeling a little bit tired, but you need to be early for your first lecture.");
+        System.out.println("After half an hour of traveling by tram, you arrive near the HTW to get a morning coffee.");
+        System.out.println("While entering Building A you feel that something is off...");
+        System.out.println("Suddenly, a big snail appears right in front of you. In shock, you spill your whole coffee on yourself.");
+        System.out.println("What do you want to do now? (1) Try to run away or (2) Talk to the snail?");
+        while (true) {
+                String answer = app.getReadUserInput();
+                if(answer.equalsIgnoreCase("1")) {
+                    System.out.println("");
+                    System.out.println("You try to run away, but the Door of Building A is locked! In panic you realise, that the snail is coming towards you.");
+                    break;
+                }
+                if(answer.equalsIgnoreCase("2")) {
+                    System.out.println("");
+                    System.out.println(getHero().name + ": 'Who are you? What are you doing here?'");
+                    System.out.println("Snail: 'Me? Ohh I'm a normal snail, just a little bit bigger than usual.");
+                    System.out.println(getHero().name + ": Are you dangerous?");
+                    break;
+                }
+                System.out.println("Invalid input. Please enter '1' or '2' in order to continue with the game.");
+        }
+        System.out.println("");
+        System.out.println("Snail: 'Ohh, don't worry. I'm not dangerous at all. In fact, I'm here to help you escape this place. Let me explain...");
+        System.out.println("Aliens have invaded the HTW and taken over the building. It's completely locked down and you can't leave.");
+        System.out.println("You have to find all the five lecturers, who are also trapped here, and get them to sign your escape paper.");
+        System.out.println("Only when you have all five signatures, you will be able to find Prof. Majuntke, who can help you escape this place.");
+        System.out.println("But be careful! You only have 24 hours (= rounds) before its too late! There are aliens lurking around the building.");
+        System.out.println("Some of them are friendly and will not harm you, but some are dangerous and will not let you pass without a fight. Good luck!'");
+        System.out.println("");
+        System.out.println("You will now get into the game menu. Each time you press 'explore HTW' you will spend one hour (= round).");
+        System.out.println("There will be different scenarios each time you explore and you will have to take action based on the situation.");
+        System.out.println("Do you wan't to continue? (y)... You have no other choice... Press (y)");
+        while (true) {
+            String answer = app.getReadUserInput();
+            if(answer.equalsIgnoreCase("y")) {
+                app.getResumeGame();
+                break;
+            }
+        System.out.println("Sorry, you will have to take the adventure. Press (y) in order to continue.");
+    }
 }
+        public void getIntroGame() {
+            this.introGame();
+        }
+
+        public void gameMenu() {
+            while (true) {
+            System.out.println("");
+            System.out.println("You're now in the game menu.");
+            System.out.println("What do you want to do next?");
+            System.out.println("(1) Explore HTW");
+            System.out.println("(2) Show hero status");
+            System.out.println("(3) Show escape paper");
+            System.out.println("(4) Rest your hero");
+            System.out.println("(5) Back to main menu");
+
+            String answer = app.getReadUserInput();
+            if(answer.equals("5")) {
+                return;
+            }
+            handleUserInputGameMenu(answer);
+            }
+    }
+
+        private void handleUserInputGameMenu(String input) {
+        switch (input) {
+                case "1":
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    System.out.println("Do you want to rest for a long time (+10 HP, costs 1 round) or a short time (+3 HP, only once per round)? (l/s) or go back to the game menu (q)");
+                    String answer = app.getReadUserInput();
+                    while(true) {
+                        if(answer.equalsIgnoreCase("l")) {
+                            getHero().regenerate(true);
+                            break;
+                        } else if(answer.equalsIgnoreCase("s")) {
+                            getHero().regenerate(false);
+                            break;
+                        } else if(answer.equalsIgnoreCase("q")) {
+                            break;
+                        } else {
+                            System.out.println("Invalid input. Please enter 'l' or 's' or 'q'.");
+                            answer = app.getReadUserInput();
+                        }
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid input. Please choose a correct number between 1 and 5");
+                    break;
+            }
+        }
+
+        public void exploreHTW() {
+            int zufallszahl = (int) (Math.random() * 100) + 1;
+            if(zufallszahl <=20) {
+                // ereignislos
+            } else if(zufallszahl > 20 && zufallszahl <= 72) {
+                // Alien
+            } else {
+                // Lecturer
+            }
+        }
+    }
+
