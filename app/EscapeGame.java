@@ -15,6 +15,13 @@ public class EscapeGame {
     private final HTWRoom[] rooms = new HTWRoom[5];
     private boolean gameRunning = true;
     private boolean gameFinished = false;
+    private Alien alien1;
+    private Alien alien2;
+    private Alien alien3;
+    private Alien alien4;
+    private Alien alien5;
+    private int rounds = 0;
+    private int maxRound = 24;
     /**
      * initialisiert einen neuen Helden, HTWRooms, Lecturer und Aliens.
      */
@@ -28,14 +35,14 @@ public class EscapeGame {
         Lecturer lecturer5 = new Lecturer("Gnaoui");
         this.rooms[0] = new HTWRoom("A238", "You have entered room A238. It's a big lecture hall, to your left you can see stairs going up to the seats. In front of you are big windows, that have been darkened with slime by some aliens. You can only see a slight shimmer of light...", lecturer1);
         this.rooms[1] = new HTWRoom("A219", "You have entered room A219. It's a small lecture hall with a few desks and chairs. There is a strange smell in the air and a weird looking liquid on the floor, probably left by an Alien passing through.", lecturer2);
-        this.rooms[2] = new HTWRoom("Mensa", "You have entered the HTW Mensa, where the people usually sit and enjoy delicious food. But now it looks more of a horror scene than a place to eat at. No people, no service, no food. Just a dark room filled with emptiness.", lecturer3);
+        this.rooms[2] = new HTWRoom("Mensa", "You have entered the HTW Mensa, where people usually sit and enjoy their delicious food. But today it looks more like a horror scene than a place to eat at. No people, no service, no food. Just a dark room filled with emptiness.", lecturer3);
         this.rooms[3] = new HTWRoom("Internetcafe", "You have entered the room, where students do their homework or wait for the next lecture to start. Filled with a couple of computers, chairs and desks and the view of the courtyard. You look out the window and see aliens running everywhere. Hopefully they don't catch a sight of you!", lecturer4);
         this.rooms[4] = new HTWRoom("Sportshall", "You have entered the sportshall, it's a very big room, but the windows have been darkened by the alien invadors. Because there is no light you can only see half of the room... But you can here some strange noises from the dark side of the hall. You decide not to investigate, because you have a life worth to live.", lecturer5);
-        Alien alien1 = new FriendlyAlien("BinaryAlien", 50, true, "01101000 01101001");
-        Alien alien2 = new UnfriendlyAlien("Blag", 30, false, "Grrr");
-        Alien alien3 = new UnfriendlyAlien("JavaAlien", 50, false, "System.out.println('Do not come near me or you will get decoded')");
-        Alien alien4 = new UnfriendlyAlien("Pi-lien", 50, false, "My infinite number 3,14... will destroy your math skills" );
-        Alien alien5 = new FriendlyAlien("Booklien", 100, true, "We have an invasion yes, but i also need you to be silent as i'm still not finished reading my book 'angewandte Programmierung' for next Semester! So pshhhh.....!! ");
+        alien1 = new FriendlyAlien("BinaryAlien", 50, true, "01101000 01101001");
+        alien2 = new UnfriendlyAlien("Blag", 30, false, "Grrr");
+        alien3 = new UnfriendlyAlien("JavaAlien", 50, false, "System.out.println('Do not come near me or you will get decoded')");
+        alien4 = new UnfriendlyAlien("Pi-lien", 50, false, "My infinite number 3,14... will destroy your math skills" );
+        alien5 = new FriendlyAlien("Booklien", 100, true, "We have an invasion yes, but i also need you to be silent as i'm still not finished reading my book 'angewandte Programmierung' for next Semester! So pshhhh.....!! ");
     }
     /** 
      * gibt zurück, ob das Spiel läuft
@@ -78,11 +85,13 @@ public class EscapeGame {
     }
 
     private void introGame() {
+        System.out.println("");
         System.out.println("It's 8 am in the morning and you are packing your backpack for university");
         System.out.println("You're still feeling a little bit tired, but you need to be early for your first lecture.");
         System.out.println("After half an hour of traveling by tram, you arrive near the HTW to get a morning coffee.");
         System.out.println("While entering Building A you feel that something is off...");
         System.out.println("Suddenly, a big snail appears right in front of you. In shock, you spill your whole coffee on yourself.");
+        System.out.println("");
         System.out.println("What do you want to do now? (1) Try to run away or (2) Talk to the snail?");
         while (true) {
                 String answer = app.getReadUserInput();
@@ -110,6 +119,7 @@ public class EscapeGame {
         System.out.println("");
         System.out.println("You will now get into the game menu. Each time you press 'explore HTW' you will spend one hour (= round).");
         System.out.println("There will be different scenarios each time you explore and you will have to take action based on the situation.");
+        System.out.println("");
         System.out.println("Do you wan't to continue? (y)... You have no other choice... Press (y)");
         while (true) {
             String answer = app.getReadUserInput();
@@ -131,12 +141,11 @@ public class EscapeGame {
             System.out.println("What do you want to do next?");
             System.out.println("(1) Explore HTW");
             System.out.println("(2) Show hero status");
-            System.out.println("(3) Show escape paper");
-            System.out.println("(4) Rest your hero");
-            System.out.println("(5) Back to main menu");
+            System.out.println("(3) Rest your hero");
+            System.out.println("(4) Back to main menu");
 
             String answer = app.getReadUserInput();
-            if(answer.equals("5")) {
+            if(answer.equals("4")) {
                 return;
             }
             handleUserInputGameMenu(answer);
@@ -151,16 +160,17 @@ public class EscapeGame {
                 case "2":
                     break;
                 case "3":
-                    break;
-                case "4":
+                    System.out.println("");
                     System.out.println("Do you want to rest for a long time (+10 HP, costs 1 round) or a short time (+3 HP, only once per round)? (l/s) or go back to the game menu (q)");
                     String answer = app.getReadUserInput();
                     while(true) {
                         if(answer.equalsIgnoreCase("l")) {
-                            getHero().regenerate(true);
+                            hero.regenerate(true);
+                            backToGameMenu();
                             break;
                         } else if(answer.equalsIgnoreCase("s")) {
-                            getHero().regenerate(false);
+                            hero.regenerate(false);
+                            backToGameMenu();
                             break;
                         } else if(answer.equalsIgnoreCase("q")) {
                             break;
@@ -171,61 +181,187 @@ public class EscapeGame {
                     }
                     break;
                 default:
-                    System.out.println("Invalid input. Please choose a correct number between 1 and 5");
+                    System.out.println("Invalid input. Please choose a correct number between 1 and 4");
                     break;
             }
         }
 
         public void exploreHTW() {
+            System.out.println("");
+            rounds++;
+            System.out.println("Round " + rounds + "/24 has started.");
+            // if rounds > 24 -> game ends methode
             int zufallszahl = (int) (Math.random() * 100) + 1;
             if(zufallszahl <=20) {
                 eventless();
             } else if(zufallszahl > 20 && zufallszahl <= 72) {
-                // Alien
+                meetAlien();
             } else {
-                // Lecturer
+                meetLecturer();
             }
+            // methode die prüft, ob alle unterschriften gesammelt wurden und wie viele -> game ends methode
         }
 
         public void eventless() {
             int zufallszahl = (int) (Math.random() * 100) + 1;
             if(zufallszahl <= 25) {
                 System.out.println("You explored Building B. Sadly you haven't found anything you need. Maybe try somewhere else...");
+                backToGameMenu();
             } else if(zufallszahl > 26 && zufallszahl <= 50) {
                 System.out.println("You entered room A241. It's very dark in here... you see a strange silouette that's lurking in the corner. Maybe it's better to turn back, it doesn't seem safe in here...");
+                backToGameMenu();
             } else if(zufallszahl > 51 && zufallszahl <= 75) {
                 System.out.println("You want to enter Building C, but the entrance is covered by aliens. Sadly you're not strong enough to beat that many. Maybe try somewhere else...");
+                backToGameMenu();
             } else {
                 System.out.println("You see an interesting looking hallway. At the end of it you see a tiny light shimmering, which emits a high pitched sound. You try to approach it, but the closer you come, the worse it gets. Seems like you won't find something here.");
-        }
+                backToGameMenu();
+            }
     }
         public void meetAlien(){
             int zufallszahl = (int) (Math.random() * 100) + 1;
             if(zufallszahl <= 20) {
-                //Alien1
+                System.out.println("You encounter " + alien1.name + "!");
+                System.out.println(alien1.name + ": " + alien1.greeting);
+                //friendly
             } else if(zufallszahl > 21 && zufallszahl <= 40) {
-                //Alien2
+                System.out.println("You encounter " + alien2.name + "!");
+                System.out.println(alien2.name + ": " + alien2.greeting);
+
             } else if(zufallszahl > 41 && zufallszahl <= 60) {
-                //Alien3
+                System.out.println("You encounter " + alien3.name + "!");
+                System.out.println(alien3.name + ": " + alien3.greeting);
+
             } else if(zufallszahl > 61 && zufallszahl <= 81) {
-                //Alien4
+                System.out.println("You encounter " + alien4.name + "!");
+                System.out.println(alien4.name + ": " + alien4.greeting);
+
             } else {
-                //Alien5
+                System.out.println("You encounter " + alien5.name + "!");
+                System.out.println(alien5.name + ": " + alien5.greeting);
+                //friendly
             }
         }
 
         public void meetLecturer(){
             int zufallszahl = (int) (Math.random() * 100) + 1;
             if(zufallszahl <= 20) {
-                //Lecturer1
+                System.out.println(rooms[0].description);
+                System.out.println("In the darkness you can see a person standing a few meters away from you. It's lecturer " + rooms[0].lecturer.name + ". You sigh in relieve. It's good to see a familiar face.");
+                System.out.println("");
+                System.out.println(hero.name + ": 'Hello lecturer " + rooms[0].lecturer.name + "! How are you doing?'");
+                System.out.println(rooms[0].lecturer.name + ": 'I'm doing fine at the moment, but you shouldn't be here, it's not safe.'");
+                System.out.println(hero.name + ": 'You're right, that's why i need your help. Could i please get your signature, so i can find Prof. Majuntke? She'll help us get out of here.'");
+                if(rooms[0].lecturer.hasSigned) {
+                    System.out.println(rooms[0].lecturer.name + ": 'As it seems, you already have my signature. Try to find another one... Good luck!'");
+                    backToGameMenu();
+                    return;
+                }
+                if(rooms[0].lecturer.isReadyToSign()) {
+                    rooms[0].lecturer.sign();
+                    hero.signExerciseLeader(rooms[0].lecturer);
+                    backToGameMenu();
+                    return;
+                }
+                backToGameMenu();
+                return;
+    
             } else if(zufallszahl > 21 && zufallszahl <= 40) {
-                //Lecturer2
+                System.out.println(rooms[1].description);
+                System.out.println("As you try to investigate the liquid on the floor, you realize you're not alone. Luckily it isn't any danger. It's lecturer " + rooms[1].lecturer.name + "." );
+                System.out.println("");
+                System.out.println(hero.name + ": 'What happened here?'");
+                System.out.println(rooms[1].lecturer.name + ": 'I don't know. And we probably don't want to know... Why are you here?'");
+                System.out.println(hero.name + ": 'I need to collect signatures in order to find Prof. Majuntke... She can help us get out of here. Could you help me out?'");
+                if(rooms[1].lecturer.hasSigned) {
+                    System.out.println(rooms[1].lecturer.name + ": 'As it seems, you already have my signature. Try to find another one... Good luck!'");
+                    backToGameMenu();
+                    return;
+                }
+                if(rooms[1].lecturer.isReadyToSign()) {
+                    rooms[1].lecturer.sign();
+                    hero.signExerciseLeader(rooms[1].lecturer);
+                    backToGameMenu();
+                    return;
+                }
+                backToGameMenu();
+                return;
+
             } else if(zufallszahl > 41 && zufallszahl <= 60) {
-                //Lecturer3
+                System.out.println(rooms[2].description);
+                System.out.println("");
+                System.out.println(rooms[2].lecturer.name + ": 'Hello " + hero.name + ", are you also looking for food here? Sadly the aliens ate everything.'");
+                System.out.println(hero.name + ": 'No, i was actually looking for you. I'm collecting signatures from all lecturers, they will help me find Prof. Majuntke. She knows how to get out of this place. Could you please help me out?'");
+                if(rooms[2].lecturer.hasSigned) {
+                    System.out.println(rooms[2].lecturer.name + ": 'As it seems, you already have my signature. Try to find another one... Good luck!'");
+                    backToGameMenu();
+                    return;
+                }
+                if(rooms[2].lecturer.isReadyToSign()) {
+                    rooms[2].lecturer.sign();
+                    hero.signExerciseLeader(rooms[2].lecturer);
+                    backToGameMenu();
+                    return;
+                }
+                backToGameMenu();
+                return;
+
             } else if(zufallszahl > 61 && zufallszahl <= 81) {
-                //Lecturer4
+                System.out.println(rooms[3].description);
+                System.out.println("Suddenly you hear a sound coming from the corner of the room. Whatever it is, it heard you... You try to peek over a table only to see lecturer " + rooms[3].lecturer.name + " working with PC parts.");
+                System.out.println("");
+                System.out.println(hero.name + ": 'Lecturer " + rooms[3].lecturer.name + "? What are you doing there? Are you alright?'");
+                System.out.println(rooms[3].lecturer.name + ": 'Hello " + hero.name + "! Don't worry, I'm just trying to build some sort of weapon so we can fight these aliens off! What are you doing here?'");
+                System.out.println(hero.name + ": 'I'm trying to find Prof. Majuntke. She seems to be the only one to know a way out of here. In order to find her i need to collect signatures... Can you help me?'");
+                if(rooms[3].lecturer.hasSigned) {
+                    System.out.println(rooms[3].lecturer.name + ": 'As it seems, you already have my signature. Try to find another one... Good luck!'");
+                    backToGameMenu();
+                    return;
+                }
+                if(rooms[3].lecturer.isReadyToSign()) {
+                    rooms[3].lecturer.sign();
+                    hero.signExerciseLeader(rooms[3].lecturer);
+                    backToGameMenu();
+                    return;
+                }
+                backToGameMenu();
+                return;
+
             } else {
-                //Lecturer5
+                System.out.println(rooms[4].description);
+                System.out.println("Suddenly, you hear a voice whispering behind you. You jump back and turn around...");
+                System.out.println("");
+                System.out.println(rooms[4].lecturer.name + ": 'Stay silent! We don't want to find out what's on the other side of the hall. What are you doing here?'");
+                System.out.println(hero.name + ": 'I'm collecting signatures to find Prof. Majuntke. Can you help me so we can leave this place?'");
+                System.out.println(hero.name + ": 'Hello lecturer " + rooms[4].lecturer.name + "! Could you please sign here for me, so i can find Prof. Majuntke?'");
+                if(rooms[4].lecturer.hasSigned) {
+                    System.out.println(rooms[4].lecturer.name + ": 'As it seems, you already have my signature. Try to find another one... Good luck!'");
+                    backToGameMenu();
+                    return;
+                }
+                if(rooms[4].lecturer.isReadyToSign()) {
+                    rooms[4].lecturer.sign();
+                    hero.signExerciseLeader(rooms[4].lecturer);
+                    backToGameMenu();
+                    return;
+                }
+                backToGameMenu();
+                return;
+
+            }
+        }
+        public void showHeroStatus(){
+            //Hero Status
+        }
+
+        public void backToGameMenu() {
+            System.out.println("Press (1) to get back to the game menu.");
+            while(true) {
+                String answer = app.getReadUserInput();
+                if(answer.equals("1")) {
+                    break;
+                }
+                System.out.println("Press (1) to get back to the game menu.");
             }
         }
 }

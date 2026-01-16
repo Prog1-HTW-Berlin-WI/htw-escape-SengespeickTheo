@@ -38,10 +38,10 @@ public class Lecturer implements Serializable {
         } else {
             int zufallszahl2 = (int) (Math.random() * 100) + 1;
             if(zufallszahl2 < 75) {
-                System.out.println("Sorry, I'm busy right now. Please come back later.");
+                System.out.println(name + ": 'Sorry, I'm busy right now.'");
             }
             else {
-            System.out.println("I don't have time for you right now. Come back later again.");
+            System.out.println(name + ": 'I don't have time for you right now.'");
             }
             return false;
         }

@@ -116,22 +116,17 @@ public class Hero implements Serializable {
      * Laufzettel unterschreiben zu lassen.
      * @param lecturer
      */
-    public void signExerciseLeader(Lecturer lecturer){
-        for(int i = 0; i < signedExerciseLeaders.length; i++) {
-            if(signedExerciseLeaders[i] == lecturer) {
-                System.out.println("You already have my signature. Search for another lecturer to sign.");
-                break;
-            }
-        }
+    public void signExerciseLeader(Lecturer lecturer){        
         for(int i = 0; i < signedExerciseLeaders.length; i++) {
             if(signedExerciseLeaders[i] == null) {
                 signedExerciseLeaders[i] = lecturer;
                 int zufallszahl = (int) (Math.random() * 100) + 1;
                 if(zufallszahl <30) {
-                    System.out.println("You really want my signature? Fine... here you go.");
+                    System.out.println(lecturer.name + ": 'You really want my signature? Fine... here you go.'");
                 } else {
-                    System.out.println("Alright, here's my signature. Good luck with your escape!");
+                    System.out.println(lecturer.name +": 'Alright, here's my signature. Good luck with your escape!'");
                 break;
+                }
             }
         }
     }
