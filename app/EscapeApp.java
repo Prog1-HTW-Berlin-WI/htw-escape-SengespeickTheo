@@ -114,7 +114,9 @@ public class EscapeApp {
     }
         
     /**
-     * startet ein neues Spiel
+     * prüft, ob Spiel existiert
+     * wenn ja: Frage, ob trotzdem neues oder nicht
+     * wenn nein: hero Objekt wird erstellt
      * erstellt neues Objekt der Klasse EscapeGame
      */
     private void startGame() {
@@ -153,7 +155,9 @@ public class EscapeApp {
         System.out.println("");
         game.gameMenu();
     }
-
+    /**
+     * getter für resumeGame
+     */
     public void getResumeGame() {
         this.resumeGame();
     }

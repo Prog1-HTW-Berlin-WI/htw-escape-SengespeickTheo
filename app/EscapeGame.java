@@ -23,7 +23,7 @@ public class EscapeGame {
     private int rounds = 0;
     private int maxRound = 24;
     /**
-     * initialisiert einen neuen Helden, HTWRooms, Lecturer und Aliens.
+     * initialisiert einen neuen Helden, Lecturer, HTWRooms und Aliens.
      */
     public EscapeGame(Hero hero, EscapeApp app) {
         this.hero = hero;
@@ -83,7 +83,9 @@ public class EscapeGame {
     public Hero getHero() {
         return hero;
     }
-
+    /**
+     * Intro zum Spiel mit treffen der Schnecke, kleine Erklärung zum Spielmenü
+     */
     private void introGame() {
         System.out.println("");
         System.out.println("It's 8 am in the morning and you are packing your backpack for university");
@@ -130,10 +132,15 @@ public class EscapeGame {
         System.out.println("Sorry, you will have to take the adventure. Press (y) in order to continue.");
     }
 }
+        /**
+         * getter für IntroGame
+         */
         public void getIntroGame() {
             this.introGame();
         }
-
+        /**
+         * Anzeige für das Spielmenü und "zurück ins Hauptmenü" 
+         */
         public void gameMenu() {
             while (true) {
             System.out.println("");
@@ -152,6 +159,14 @@ public class EscapeGame {
             }
     }
 
+        /**
+         * mit User Input von der Spielmenü Anzeige umgehen
+         * 1: explore HTW
+         * 2: hero status
+         * 3: rest:  lange Pause, kurze Pause, oder Quit=zurück ins Spielmenü
+         * 4: back to main menu
+         * @param input Nutzereingabe
+         */
         private void handleUserInputGameMenu(String input) {
         switch (input) {
                 case "1":
@@ -185,7 +200,11 @@ public class EscapeGame {
                     break;
             }
         }
-
+        /**
+        * HTW erkunden: 
+        * zählt wie viele Runden der Spieler schon gespielt hat
+        *Möglichkeit zwischen ereignislos, Alien treffen, Lecturer treffen
+        */
         public void exploreHTW() {
             System.out.println("");
             rounds++;
@@ -201,7 +220,10 @@ public class EscapeGame {
             }
             // methode die prüft, ob alle unterschriften gesammelt wurden und wie viele -> game ends methode
         }
-
+        /**
+        * Möglichkeit "ereignislos"
+        * gibt verschiedene Texte aus
+        */
         public void eventless() {
             int zufallszahl = (int) (Math.random() * 100) + 1;
             if(zufallszahl <= 25) {
@@ -217,7 +239,10 @@ public class EscapeGame {
                 System.out.println("You see an interesting looking hallway. At the end of it you see a tiny light shimmering, which emits a high pitched sound. You try to approach it, but the closer you come, the worse it gets. Seems like you won't find something here.");
                 backToGameMenu();
             }
-    }
+        }
+        /**
+         * Möglichkeit "Alien treffen"
+         */
         public void meetAlien(){
             int zufallszahl = (int) (Math.random() * 100) + 1;
             if(zufallszahl <= 20) {
@@ -242,7 +267,12 @@ public class EscapeGame {
                 //friendly
             }
         }
-
+        /** Möglichkeit "lecturer treffen"
+         * 5 lecturer, alle mit unterschiedlichem Dialog
+         * erst wird geprüft, ob schon unterschrieben
+         * wenn nicht, ob er/sie bereit dazu ist
+         * dann zufällig Unterschrift oder nicht
+         */
         public void meetLecturer(){
             int zufallszahl = (int) (Math.random() * 100) + 1;
             if(zufallszahl <= 20) {
@@ -350,10 +380,16 @@ public class EscapeGame {
 
             }
         }
+        /**
+         * Hero Status
+         */
         public void showHeroStatus(){
-            //Hero Status
+            
         }
-
+        /** 
+         * ermöglicht es ins Spielmenü zurückzukehren
+         * nach bspw. "ereignislos"
+         */
         public void backToGameMenu() {
             System.out.println("Press (1) to get back to the game menu.");
             while(true) {
