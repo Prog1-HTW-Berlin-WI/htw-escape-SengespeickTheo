@@ -34,9 +34,7 @@ public class Hero implements Serializable {
      */
     public int takeDamage(int amount){
         this.healthPoints -= amount;
-        System.out.println("You took " + amount + " points of damage!");
         if(this.healthPoints <= 0) {
-            System.out.println("Your health points reached 0. You have been defeated!");
             this.healthPoints = 0;
         }
         return this.healthPoints;
@@ -51,20 +49,19 @@ public class Hero implements Serializable {
      */
     public void regenerate(boolean longRest){
         if(longRest) {
-            if(this.healthPoints > 50) {
+            if(this.healthPoints >= 50) {
                 System.out.println("You reached your maximum points of health. Choose a small rest instead.");
-                this.healthPoints -= 10;
-            }
+            } else {
             this.healthPoints += 10;
             System.out.println("Ahh, finally a rest. You regained 10 health points. Try not to lose them this time...");
-            // RUNDE WIRD BEI SPIELMENÜ NOCH HINZUGEFÜGT
-        } else {
-            if(this.healthPoints > 50) {
-                System.out.println("You reached your maximum points of health. You can't rest any further.");
-                this.healthPoints -= 3;
             }
+        } else {
+            if(this.healthPoints >= 50) {
+                System.out.println("You reached your maximum points of health. You can't rest any further.");
+            } else {
             this.healthPoints += 3;
             System.out.println("A short break can do wonders. You regained 3 health points.");
+            }
         }
     }
 
@@ -96,7 +93,7 @@ public class Hero implements Serializable {
      * sonst normaler Schaden
      * @return hinzugefügten Schaden
      */
-    public int attack(){
+    public int attack(Alien alien){
         int zufallszahl = (int) (Math.random() * 100) + 1;
         if(zufallszahl <= 13) {
             System.out.println("Your attack missed! You dealt no damage.");
@@ -104,10 +101,12 @@ public class Hero implements Serializable {
         }
         else if(zufallszahl >=14 && zufallszahl <=26){
             System.out.println("Great hit! You dealt " + (int) ((experiencePoints * 2.3 + 1)*2) + " points of damage.");
+            alien.takeDamage((int) ((experiencePoints * 2.3 + 1)*2));
             return (int) ((experiencePoints * 2.3 + 1))*2;
         }
         else {
             System.out.println("You dealt " + (int) (experiencePoints * 2.3 + 1) + " points of damage.");
+            alien.takeDamage((int) (experiencePoints * 2.3 + 1));
             return (int) (experiencePoints * 2.3 + 1);
         }
     }
@@ -116,7 +115,12 @@ public class Hero implements Serializable {
      * Laufzettel unterschreiben zu lassen.
      * @param lecturer
      */
-    public void signExerciseLeader(Lecturer lecturer){        
+    public void signExerciseLeader(Lecturer lecturer){
+        for(int i = 0; i < signedExerciseLeaders.length; i++) {
+            if(signedExerciseLeaders[i] == lecturer) {
+                return;
+            }
+        }        
         for(int i = 0; i < signedExerciseLeaders.length; i++) {
             if(signedExerciseLeaders[i] == null) {
                 signedExerciseLeaders[i] = lecturer;
@@ -125,8 +129,8 @@ public class Hero implements Serializable {
                     System.out.println(lecturer.name + ": 'You really want my signature? Fine... here you go.'");
                 } else {
                     System.out.println(lecturer.name +": 'Alright, here's my signature. Good luck with your escape!'");
-                break;
                 }
+                return;
             }
         }
     }
@@ -145,6 +149,7 @@ public class Hero implements Serializable {
         this.experiencePoints += experiencePoints;
         System.out.println("You gained " + experiencePoints + " experience points!");
     }
+
     /**
      * Methode, die zurück gibt, ob der Hero noch handlungsfähig ist.
      * @return ob Hero noch handlungsfähig ist.
@@ -155,5 +160,8 @@ public class Hero implements Serializable {
         } else {
             return false;
         }
+    }
+    public int getHealthPoints() {
+        return healthPoints;
     }
 }

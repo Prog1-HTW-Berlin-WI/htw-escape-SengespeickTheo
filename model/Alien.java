@@ -41,4 +41,24 @@ public abstract class Alien {
             return false;
         }
     }
+
+    public int attack(Hero hero) {
+        int zufallszahl = (int) (Math.random() * 100) + 1;
+        if (zufallszahl <= 15) {
+            System.out.println(name + " missed the attack!");
+            return 0;
+        }
+        int damage = 5;
+        System.out.println(name + " dealt " + damage + " points of damage");
+        hero.takeDamage(damage);
+        return damage;
+    }
+    
+    public int getLifePoints() {
+        return lifePoints;
+    }
+
+    public void resetLifePoints(int lifePoints) {
+        this.lifePoints = lifePoints;
+    }
 }

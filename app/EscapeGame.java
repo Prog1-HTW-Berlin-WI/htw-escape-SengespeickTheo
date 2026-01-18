@@ -22,6 +22,7 @@ public class EscapeGame {
     private Alien alien5;
     private int rounds = 0;
     private int maxRound = 24;
+    private boolean shortRestUsed = false;
     /**
      * initialisiert einen neuen Helden, Lecturer, HTWRooms und Aliens.
      */
@@ -38,11 +39,11 @@ public class EscapeGame {
         this.rooms[2] = new HTWRoom("Mensa", "You have entered the HTW Mensa, where people usually sit and enjoy their delicious food. But today it looks more like a horror scene than a place to eat at. No people, no service, no food. Just a dark room filled with emptiness.", lecturer3);
         this.rooms[3] = new HTWRoom("Internetcafe", "You have entered the room, where students do their homework or wait for the next lecture to start. Filled with a couple of computers, chairs and desks and the view of the courtyard. You look out the window and see aliens running everywhere. Hopefully they don't catch a sight of you!", lecturer4);
         this.rooms[4] = new HTWRoom("Sportshall", "You have entered the sportshall, it's a very big room, but the windows have been darkened by the alien invadors. Because there is no light you can only see half of the room... But you can here some strange noises from the dark side of the hall. You decide not to investigate, because you have a life worth to live.", lecturer5);
-        alien1 = new FriendlyAlien("BinaryAlien", 50, true, "01101000 01101001");
-        alien2 = new UnfriendlyAlien("Blag", 30, false, "Grrr");
-        alien3 = new UnfriendlyAlien("JavaAlien", 50, false, "System.out.println('Do not come near me or you will get decoded')");
-        alien4 = new UnfriendlyAlien("Pi-lien", 50, false, "My infinite number 3,14... will destroy your math skills" );
-        alien5 = new FriendlyAlien("Booklien", 100, true, "We have an invasion yes, but i also need you to be silent as i'm still not finished reading my book 'angewandte Programmierung' for next Semester! So pshhhh.....!! ");
+        alien1 = new FriendlyAlien("BinaryAlien", 50, true, "'01101000 01101001'");
+        alien2 = new UnfriendlyAlien("Blarg", 30, false, "'Grrr'");
+        alien3 = new UnfriendlyAlien("JavaAlien", 50, false, "'System.out.println('Do not come near me or you will get decoded')'");
+        alien4 = new UnfriendlyAlien("Pi-lien", 50, false, "'My infinite number 3,14... will destroy you'" );
+        alien5 = new FriendlyAlien("Booklien", 100, true, "'We have an invasion yes, but i also need you to be silent as i'm still not finished reading my book 'Angewandte Programmierung' for next Semester! So pshhhh.....!!'");
     }
     /** 
      * gibt zurück, ob das Spiel läuft
@@ -173,6 +174,7 @@ public class EscapeGame {
                     exploreHTW();
                     break;
                 case "2":
+                    showHeroStatus();
                     break;
                 case "3":
                     System.out.println("");
@@ -181,12 +183,20 @@ public class EscapeGame {
                     while(true) {
                         if(answer.equalsIgnoreCase("l")) {
                             hero.regenerate(true);
+                            rounds++;
                             backToGameMenu();
                             break;
                         } else if(answer.equalsIgnoreCase("s")) {
+                            if(shortRestUsed) {
+                                System.out.println("You already used your short rest this round. Come back next round!");
+                                backToGameMenu();
+                                break;
+                            } else {
                             hero.regenerate(false);
+                            shortRestUsed = true;
                             backToGameMenu();
                             break;
+                            }
                         } else if(answer.equalsIgnoreCase("q")) {
                             break;
                         } else {
@@ -206,10 +216,20 @@ public class EscapeGame {
         *Möglichkeit zwischen ereignislos, Alien treffen, Lecturer treffen
         */
         public void exploreHTW() {
+            if(hero.getHealthPoints() <= 0) {
+                System.out.println("You are too weak to explore the HTW. You must rest before you can continue.");
+                backToGameMenu();
+                return;
+            }
+            if(rounds >= maxRound) {
+                endGame();
+                return;
+            }
             System.out.println("");
             rounds++;
+            shortRestUsed = false;
             System.out.println("Round " + rounds + "/24 has started.");
-            // if rounds > 24 -> game ends methode
+
             int zufallszahl = (int) (Math.random() * 100) + 1;
             if(zufallszahl <=20) {
                 eventless();
@@ -218,8 +238,9 @@ public class EscapeGame {
             } else {
                 meetLecturer();
             }
-            // methode die prüft, ob alle unterschriften gesammelt wurden und wie viele -> game ends methode
+            allSignaturesCollected();
         }
+
         /**
         * Möglichkeit "ereignislos"
         * gibt verschiedene Texte aus
@@ -242,31 +263,192 @@ public class EscapeGame {
         }
         /**
          * Möglichkeit "Alien treffen"
+         * 2 freundliche Aliens und 3 unfreundliche
+         * freundliche geben eine kurze Konversation und etwas EP
+         * bei unfreundlichen kann man kämpfen (bis einer 0 LP hat) oder fliehen (nur 1 Fluchtversuch)
+         * nach einem Kampf gibt es 1EP (verloren) oder 5EP (gewonnen)
          */
         public void meetAlien(){
             int zufallszahl = (int) (Math.random() * 100) + 1;
+            // Alien 1 BinaryAlien friendly:
             if(zufallszahl <= 20) {
                 System.out.println("You encounter " + alien1.name + "!");
                 System.out.println(alien1.name + ": " + alien1.greeting);
-                //friendly
-            } else if(zufallszahl > 21 && zufallszahl <= 40) {
+                System.out.println(hero.name + ": Hi. Do you only speak binary?'");
+                System.out.println(alien1.name + ": '01111001 01100101 01110011 00100000 01110111 01101000 01100001 01110100 00100000 01100001 01110010 01100101 00100000 01111001 01101111 01110101 00100000 01100100 01101111 01101001 01101110 01100111 00100000 01101000 01100101 01110010 01100101 00111111'");
+                System.out.println(hero.name + ": 'Luckily i paid attention in my lectures... I'm trying to escape from here. Can you help me?'");
+                System.out.println(alien1.name + ": '01001111 01100110 00100000 01100011 01101111 01110101 01110010 01110011 01100101 00100000 01101000 01100101 01110010 01100101 00100000 01100001 01110010 01100101 00100000 00110010 01000101 01010000'");
+                hero.addExperiencePoints(2);
+                System.out.println(hero.name + ": 'Thank you!'");
+                backToGameMenu();
+            // Alien 2 Blarg unfriendly:    
+            } else if(zufallszahl > 21 && zufallszahl <= 40) {  
                 System.out.println("You encounter " + alien2.name + "!");
                 System.out.println(alien2.name + ": " + alien2.greeting);
+                
+                alien2.resetLifePoints(30);
+                boolean allowedToFlee = true;
 
+                while(!alien2.isDefeated() && hero.isOperational()) {
+                    System.out.println("");
+                    System.out.println("What do you want to do?");
+                    System.out.println("(1) Attack");
+                    System.out.println("(2) Flee (Warning: You can only try to flee one time!)");
+                    String answer = app.getReadUserInput();
+
+                    if(answer.equals("1")) {
+                        hero.attack(alien2);
+                        System.out.println(alien2.name + " has " + alien2.getLifePoints() + " life points left.");
+                        if(alien2.isDefeated()) {
+                            hero.addExperiencePoints(5);
+                            backToGameMenu();
+                            return;
+                        }
+                        alien2.attack(hero);
+                        System.out.println("You have " + hero.getHealthPoints() + " health points left.");
+                        if(!hero.isOperational()) {
+                            System.out.println("You have been defeated...");
+                            hero.addExperiencePoints(1);
+                            backToGameMenu();
+                            return;
+                        }
+
+                    } else if(answer.equals("2") && allowedToFlee) {
+                        if(hero.flee()) {
+                            backToGameMenu();
+                            return;
+                        }
+                        allowedToFlee = false;
+                        alien2.attack(hero);
+                        System.out.println("You have " + hero.getHealthPoints() + " health points left");
+                        if(!hero.isOperational()) {
+                            System.out.println("You have been defeated...");
+                            hero.addExperiencePoints(1);
+                            backToGameMenu();
+                            return;
+                        }
+
+                    } else {
+                        System.out.println("Invalid Input. Enter (1) or (2).");
+                    }
+                }
+
+            // Alien 3 JavaAlien unfriendly:
             } else if(zufallszahl > 41 && zufallszahl <= 60) {
                 System.out.println("You encounter " + alien3.name + "!");
                 System.out.println(alien3.name + ": " + alien3.greeting);
+            
+                alien3.resetLifePoints(50);
+                boolean allowedToFlee = true;
 
+                while(!alien3.isDefeated() && hero.isOperational()) {
+                    System.out.println("");
+                    System.out.println("What do you want to do?");
+                    System.out.println("(1) Attack");
+                    System.out.println("(2) Flee (Warning: You can only try to flee one time!)");
+                    String answer = app.getReadUserInput();
+
+                    if(answer.equals("1")) {
+                        hero.attack(alien3);
+                        System.out.println(alien3.name + " has " + alien3.getLifePoints() + " life points left.");
+                        if(alien3.isDefeated()) {
+                            hero.addExperiencePoints(5);
+                            backToGameMenu();
+                            return;
+                        }
+                        alien3.attack(hero);
+                        System.out.println("You have " + hero.getHealthPoints() + " health points left.");
+                        if(!hero.isOperational()) {
+                            System.out.println("You have been defeated...");
+                            hero.addExperiencePoints(1);
+                            backToGameMenu();
+                            return;
+                        }
+
+                    } else if(answer.equals("2") && allowedToFlee) {
+                        if(hero.flee()) {
+                            backToGameMenu();
+                            return;
+                        }
+                        allowedToFlee = false;
+                        alien3.attack(hero);
+                        System.out.println("You have " + hero.getHealthPoints() + " health points left");
+                        if(!hero.isOperational()) {
+                            System.out.println("You have been defeated...");
+                            hero.addExperiencePoints(1);
+                            backToGameMenu();
+                            return;
+                        }
+
+                    } else {
+                        System.out.println("Invalid Input. Enter (1) or (2).");
+                    }
+                }
+
+            // Alien 4 Pi-lien unfriendly:
             } else if(zufallszahl > 61 && zufallszahl <= 81) {
                 System.out.println("You encounter " + alien4.name + "!");
                 System.out.println(alien4.name + ": " + alien4.greeting);
+            
+                alien4.resetLifePoints(50);
+                boolean allowedToFlee = true;
 
+                while(!alien4.isDefeated() && hero.isOperational()) {
+                    System.out.println("");
+                    System.out.println("What do you want to do?");
+                    System.out.println("(1) Attack");
+                    System.out.println("(2) Flee (Warning: You can only try to flee one time!)");
+                    String answer = app.getReadUserInput();
+
+                    if(answer.equals("1")) {
+                        hero.attack(alien4);
+                        System.out.println(alien4.name + " has " + alien4.getLifePoints() + " life points left.");
+                        if(alien4.isDefeated()) {
+                            hero.addExperiencePoints(5);
+                            backToGameMenu();
+                            return;
+                        }
+                        alien4.attack(hero);
+                        System.out.println("You have " + hero.getHealthPoints() + " health points left.");
+                        if(!hero.isOperational()) {
+                            System.out.println("You have been defeated...");
+                            hero.addExperiencePoints(1);
+                            backToGameMenu();
+                            return;
+                        }
+
+                    } else if(answer.equals("2") && allowedToFlee) {
+                        if(hero.flee()) {
+                            backToGameMenu();
+                            return;
+                        }
+                        allowedToFlee = false;
+                        alien4.attack(hero);
+                        System.out.println("You have " + hero.getHealthPoints() + " health points left");
+                        if(!hero.isOperational()) {
+                            System.out.println("You have been defeated...");
+                            hero.addExperiencePoints(1);
+                            backToGameMenu();
+                            return;
+                        }
+
+                    } else {
+                        System.out.println("Invalid Input. Enter (1) or (2).");
+                    }
+                }
+
+            // Alien 5 Booklien friendly:
             } else {
                 System.out.println("You encounter " + alien5.name + "!");
                 System.out.println(alien5.name + ": " + alien5.greeting);
-                //friendly
+                System.out.println(hero.name + " *whispering*: 'Im sorry, im just trying to find lecturers. Can you maybe help me?'");
+                System.out.println(alien5.name + ": 'If you won't leave otherwise... I heard there's a lecturer in room A238. Maybe try there.'");
+                System.out.println(hero.name + ": 'Thank you so mu-'");
+                System.out.println(alien5.name + ": 'Silence please!'");
+                backToGameMenu();              
             }
         }
+
         /** Möglichkeit "lecturer treffen"
          * 5 lecturer, alle mit unterschiedlichem Dialog
          * erst wird geprüft, ob schon unterschrieben
@@ -384,7 +566,26 @@ public class EscapeGame {
          * Hero Status
          */
         public void showHeroStatus(){
+            int count = 0;
+            System.out.println("");
+            System.out.println("Name: " + hero.name);
+            System.out.println("Health points: " + hero.healthPoints);
+            System.out.println("Experience points: " + hero.experiencePoints);
+            for(int i = 0; i < hero.signedExerciseLeaders.length; i++) {
+                if(hero.signedExerciseLeaders[i] != null) {
+                    count++;
+                }
+            }
+            System.out.println("Signatures: " + count);
+            System.out.println("Signed Lecturers:");
             
+            for(int i = 0; i < hero.signedExerciseLeaders.length; i++) {
+                if(hero.signedExerciseLeaders[i] != null) {
+                    System.out.println("-" + hero.signedExerciseLeaders[i].name);
+                }
+            }
+            System.out.println("Current round: " + rounds + "/" + maxRound);
+            backToGameMenu();
         }
         /** 
          * ermöglicht es ins Spielmenü zurückzukehren
@@ -400,4 +601,27 @@ public class EscapeGame {
                 System.out.println("Press (1) to get back to the game menu.");
             }
         }
-}
+
+        public boolean allSignaturesCollected() {
+            for(int i = 0; i < rooms.length ; i++) {
+                if(rooms[i].lecturer.hasSigned == false) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public void endGame() {
+            if(allSignaturesCollected() && rounds <= maxRound) {
+                System.out.println("Majunkte treffen");
+                gameFinished = true;
+                gameRunning = false;
+                backToGameMenu();
+            } 
+            System.out.println("You failed to escape the HTW.");
+            gameFinished = true;
+            gameRunning = false;
+            backToGameMenu();
+        } 
+    }
+
+
