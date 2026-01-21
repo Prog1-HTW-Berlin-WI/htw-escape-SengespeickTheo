@@ -257,9 +257,9 @@ public class EscapeGame {
         System.out.println("Round " + rounds + "/24 has started.");
 
         int zufallszahl = (int) (Math.random() * 100) + 1;
-        if(zufallszahl <=1) {
+        if(zufallszahl <=20) {
             eventless();
-        } else if(zufallszahl > 2 && zufallszahl <= 3) {
+        } else if(zufallszahl > 20 && zufallszahl <= 72) {
             meetAlien();
         } else {
             meetLecturer();
