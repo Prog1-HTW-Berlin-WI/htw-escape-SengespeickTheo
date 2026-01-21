@@ -11,6 +11,9 @@ import java.util.Scanner;
 * @auhor Leon von Kielpinski 
 */
 
+/**
+ * 
+ */
 public class EscapeApp {
 
     public static final String SAVE_FILE_NAME = "save";
@@ -26,11 +29,11 @@ public class EscapeApp {
         while (true) {
             app.showMainMenu();
             String choice = app.readUserInput();
+            System.out.println("");
             app.handleUserInput(choice);
             System.out.println("====================");
         }
     }
-
 
     /**
      * zeigt das Hauptmenü auf dem Terminal an
@@ -51,6 +54,7 @@ public class EscapeApp {
         System.out.println("");
         System.out.println("Please choose a given number: ");
     }
+
     /**
      * liest eine Benutzereingabe vom Terminal ein
      * @return die Benutzereingabe als String
@@ -85,15 +89,15 @@ public class EscapeApp {
             case "3":
                 if(isGameRunning() == false) {
                     System.out.println("Invalid Input. Please choose a given number.");
-                } else if(this.hasSavedGame()) {
-                    this.loadGame();
+                } else {
+                    this.saveGame();
                 }
                 break;
             case "4":
-                if(isGameRunning() == false && hasSavedGame() == false) {
+                if(hasSavedGame() == false) {
                     System.out.println("Invalid Input. Please choose a given number.");
                 } else {
-                    this.saveGame();
+                    this.loadGame();
                 }
                 break;
             case "5":
@@ -125,26 +129,29 @@ public class EscapeApp {
                 System.out.println("A game already exists. If you haven't saved it yet, it will be lost. Do you want to start a new one anyway? (y/n)");
                 String answer = readUserInput();
                 if(answer.equalsIgnoreCase("n")) {
+                    System.out.println("");
                     return;
                 }
                 if(answer.equalsIgnoreCase("y")) {
+                    System.out.println("");
                     break;
                 }
                 System.out.println("Invalid input. Please enter 'y' or 'n'.");
             }
             System.out.println("Please enter your hero's name:");
             String name = readUserInput();
+            System.out.println("");
             Hero hero = new Hero(name);
             this.game = new EscapeGame(hero, this);
             game.getIntroGame();
         }
         System.out.println("Please enter your hero's name:");
         String name = readUserInput();
+        System.out.println("");
         Hero hero = new Hero(name);
         this.game = new EscapeGame(hero, this);
         game.getIntroGame();
     }
-
     
     /**
      * setzt ein laufendes Spiel fort
@@ -155,12 +162,14 @@ public class EscapeApp {
         System.out.println("");
         game.gameMenu();
     }
+
     /**
      * getter für resumeGame
      */
     public void getResumeGame() {
         this.resumeGame();
     }
+
     /**
      * löscht die gespeicherte Spielstanddatei, falls eine vorhanden ist.
      * Bestätigung wird auf dem Terminal ausgegeben.
@@ -170,6 +179,7 @@ public class EscapeApp {
             System.out.println("Game deleted!");
         }
     }
+
     /**
      * speichert den aktuellen Spielstand in einer Datei
      * @return true, wenn das Spiel erfolgreich gespeichert wurde, sonst false
@@ -186,6 +196,7 @@ public class EscapeApp {
         }
         System.out.println("Game saved!");
     }
+
     /**
      * lädt ein gespeichertes Spiel aus einer Datei und gibt Bestätigung auf dem Terminal aus.
      * Wenn es nicht funktioniert, wird eine Fehlermeldung ausgegeben.
@@ -199,6 +210,7 @@ public class EscapeApp {
             System.err.println("Something went wrong while loading the game: " + ex.getMessage());
         }
     }
+
     /**
      * gibt zurück, ob ein Spiel läuft
      * @return true, wenn ein Spiel läuft, sonst false
@@ -206,6 +218,7 @@ public class EscapeApp {
     private boolean isGameRunning() {
         return game != null;
     }
+
     /**
      * gibt zurück, ob das Spiel beendet ist
      * @return true, wenn das Spiel beendet ist, sonst false
@@ -213,6 +226,7 @@ public class EscapeApp {
     private boolean isGameFinished() {
         return game != null && game.isGameFinished();
     }
+
     /**
      * prüft, ob eine gespeicherte Spielstanddatei existiert
      * @return true, wenn eine gespeicherte Spielstanddatei existiert, sonst false

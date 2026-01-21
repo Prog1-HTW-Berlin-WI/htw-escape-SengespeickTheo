@@ -1,10 +1,15 @@
+import java.io.Serializable;
 
 /**
 * Namen der Autoren des Projekts
 * @author Theo Sengespeick
 * @auhor Leon von Kielpinski 
 */
-public abstract class Alien {
+
+/**
+ * 
+ */
+public abstract class Alien implements Serializable{
 
     // Bitte serialVersionUID beibehalten, damit die Klasse bei der
     // Speicherung als Datei (Serialisierung) und beim Laden (Deserialisierung)
@@ -42,6 +47,11 @@ public abstract class Alien {
         }
     }
 
+    /**
+     * 
+     * @param hero
+     * @return
+     */
     public int attack(Hero hero) {
         int zufallszahl = (int) (Math.random() * 100) + 1;
         if (zufallszahl <= 15) {
@@ -49,7 +59,7 @@ public abstract class Alien {
             return 0;
         }
         int damage = 5;
-        System.out.println(name + " dealt " + damage + " points of damage");
+        System.out.println(name + " dealt " + damage + " points of damage.");
         hero.takeDamage(damage);
         return damage;
     }
@@ -58,6 +68,10 @@ public abstract class Alien {
         return lifePoints;
     }
 
+    /**
+     * 
+     * @param lifePoints
+     */
     public void resetLifePoints(int lifePoints) {
         this.lifePoints = lifePoints;
     }

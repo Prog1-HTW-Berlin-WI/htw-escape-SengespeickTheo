@@ -6,6 +6,9 @@
 */
 import java.io.Serializable;
 
+/**
+ * 
+ */
 public class Hero implements Serializable {
 
     // Bitte serialVersionUID beibehalten, damit die Klasse bei der
@@ -85,6 +88,7 @@ public class Hero implements Serializable {
             return false;
         }
     }
+
     /**
      * Methode, mit der der Hero angreifen kann.
      * @param zufallszahl berechent Zufallszahl zwischen 1 und 100 für Angriffschaden
@@ -110,6 +114,7 @@ public class Hero implements Serializable {
             return (int) (experiencePoints * 2.3 + 1);
         }
     }
+
     /**
      * Methode dafür, wenn der Hero einen Lecturer trifft, um ihn den
      * Laufzettel unterschreiben zu lassen.
@@ -134,6 +139,7 @@ public class Hero implements Serializable {
             }
         }
     }
+
     /**
      * getter für experiencePoints
      * @return experiencePoints
@@ -141,6 +147,7 @@ public class Hero implements Serializable {
     public int getExperiencePoints(){
         return this.experiencePoints;
     }
+    
     /**
      * Methode, die experiencePoints hinzufügt.
      * @param experiencePoints

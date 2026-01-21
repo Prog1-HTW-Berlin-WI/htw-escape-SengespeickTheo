@@ -8,6 +8,9 @@
 import java.io.Serializable;
 import java.util.Random;
 
+/**
+ * 
+ */
 public class Lecturer implements Serializable {
 
     // Bitte serialVersionUID beibehalten, damit die Klasse bei der

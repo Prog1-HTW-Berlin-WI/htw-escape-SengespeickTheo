@@ -1,5 +1,15 @@
+/**
+ * 
+ */
 public class UnfriendlyAlien extends Alien {
     
+    /**
+     * 
+     * @param name
+     * @param lifePoints
+     * @param friendly
+     * @param greeting
+     */
     public UnfriendlyAlien(String name, int lifePoints, boolean friendly, String greeting) {
         this.name = name;
         this.lifePoints = lifePoints;
