@@ -187,7 +187,11 @@ public class EscapeGame {
     */
     private void handleUserInputGameMenu(String input) {
         switch (input) {
-            case "1":               
+            case "1":        
+                if(gameFinished) {
+                    System.out.println("You already finished this game. You can start a new one if you want to...");
+                    return;
+                }       
                 exploreHTW();
                 break;
             case "2":
@@ -244,12 +248,7 @@ public class EscapeGame {
             backToGameMenu();
             return;
         }
-        if(allSignaturesCollected() && rounds <= maxRound) {
-            endGame();
-        }
-        if(rounds >= maxRound) {
-            endGame();
-        }
+        
         System.out.println("");
         rounds++;
         shortRestUsed = false;
@@ -266,6 +265,15 @@ public class EscapeGame {
             meetLecturer();
         }
         allSignaturesCollected();
+
+        if(allSignaturesCollected() && rounds <= maxRound) {
+            endGame();
+            return;
+        }
+        if(rounds >= maxRound) {
+            endGame();
+            return;
+        }
     }
 
     /**
@@ -703,6 +711,8 @@ public class EscapeGame {
      * 
      */
     public void endGame() {
+        gameFinished = true;
+        boolean escaped = false;
         if(allSignaturesCollected() && rounds <= maxRound) {
             int attempt = 0;
             System.out.println("Good job you got all 5 signatures!");
@@ -735,21 +745,13 @@ public class EscapeGame {
                 while(attempt < 2) {
                     String answer = app.getReadUserInput();
                     if(answer.equals("3")){
-                        endScene();
-                        backToGameMenu();
+                        escaped = true;
                         break;
                     } else {
                         attempt++;
                         if(attempt == 1){
                             System.out.println("Prof. Majuntke: 'Wrong answer. You got one more try...'");
-                        } else {
-                            System.out.println("Prof. Majuntke: 'Wrong again... All that effort for nothing...'"); 
-                            System.out.println("");
-                            System.out.println("Prof. Majunkte gets back into her UFO. In desperation you try to run after her but she's years ahead. Devastated you realize that you will be trapped here forever...");
-                            System.out.println("");
-                            backToGameMenu();
-                            break;
-                        }
+                        } 
                     }
                 }
             } else if(zufallszahl >=34 && zufallszahl <66) {
@@ -764,21 +766,13 @@ public class EscapeGame {
                     String answer = app.getReadUserInput();
                     if(answer.equals("2")){
                         System.out.println("");
-                        endScene();
-                        backToGameMenu();
+                        escaped = true;
                         break;
                     } else {
                         attempt++;
                         if(attempt == 1){
                             System.out.println("Prof. Majuntke: 'Wrong answer. You got one more try...'");
-                        } else {
-                            System.out.println("Prof. Majuntke: 'Wrong again... All that effort for nothing...'"); 
-                            System.out.println("");
-                            System.out.println("Prof. Majunkte gets back into her UFO. In desperation you try to run after her but she's years ahead. Devastated you realize that you will be trapped here forever...");
-                            System.out.println("");
-                            backToGameMenu();
-                            break;
-                        }
+                        } 
                     }
                 }
             } else {
@@ -802,30 +796,32 @@ public class EscapeGame {
                     String answer = app.getReadUserInput();
                     if(answer.equals("3")){
                         System.out.println("");
-                        endScene();
-                        backToGameMenu();
+                        escaped = true;
                         break;
                     } else {
                         attempt++;
                         if(attempt == 1){
                             System.out.println("Prof. Majuntke: 'Wrong answer. You got one more try...'");
-                        } else {
-                            System.out.println("Prof. Majuntke: 'Wrong again... All that effort for nothing...'"); 
-                            System.out.println("");
-                            System.out.println("Prof. Majunkte gets back into her UFO. In desperation you try to run after her but she's years ahead. Devastated you realize that you will be trapped here forever...");
-                            System.out.println("");
-                            backToGameMenu();
-                            break;
                         }
                     }
                 }
             }
-            gameFinished = true;
+
+            if(escaped){
+                endScene();
+            } else {
+                System.out.println("Prof. Majuntke: 'Wrong again... All that effort for nothing...");
+                System.out.println("");
+                System.out.println("Prof. Majuntke gets back into her UFO. In desperation you try to run after her but she's years ahead. Devastated you realize that you will be trapped here forever...");
+            }
+        
             backToGameMenu();
-        } 
+            return;
+        } else {
         System.out.println("You failed to escape the HTW.");
-        gameFinished = true;
         backToGameMenu();
+        return;
+        }
     } 
 
     public void endScene() {
