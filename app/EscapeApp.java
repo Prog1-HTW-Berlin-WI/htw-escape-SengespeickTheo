@@ -12,7 +12,7 @@ import java.util.Scanner;
 */
 
 /**
- * 
+ * steuert alles, beinhaltet Hauptmenü und Dinge die indirekt mit dem Spielen zu tun haben
  */
 public class EscapeApp {
 
@@ -36,7 +36,7 @@ public class EscapeApp {
     }
 
     /**
-     * zeigt das Hauptmenü auf dem Terminal an
+     * zeigt das Hauptmenü auf dem Terminal an, Spieler wird aufgefordert damit zu interagieren
      */
     private void showMainMenu() {
         System.out.println("You're in the main menu");
@@ -70,7 +70,7 @@ public class EscapeApp {
     }
 
     /**
-     * verarbeitet die Benutzereingabe und führt gewünschte Aktion aus.
+     * verarbeitet die Benutzereingabe und führt gewünschte Aktion (1-6) im Hauptmenü aus.
      * Falls es nicht funktioniert, wird eine Fehlermeldung ausgegeben.
      * @param input die Benutzereingabe als String.
      */
@@ -119,7 +119,7 @@ public class EscapeApp {
         
     /**
      * prüft, ob Spiel existiert
-     * wenn ja: Frage, ob trotzdem neues oder nicht
+     * wenn ja: Frage, ob trotzdem neues ein neues Spiel erstellt werden soll oder nicht
      * wenn nein: hero Objekt wird erstellt
      * erstellt neues Objekt der Klasse EscapeGame
      */

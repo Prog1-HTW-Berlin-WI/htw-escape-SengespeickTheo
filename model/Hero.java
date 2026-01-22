@@ -7,7 +7,7 @@
 import java.io.Serializable;
 
 /**
- * 
+ * Eigenschaften und Methoden für hero
  */
 public class Hero implements Serializable {
 
@@ -23,6 +23,7 @@ public class Hero implements Serializable {
 
     /**
      * Konstruktor für Hero
+     * @param name vom hero
      */
     public Hero(String name){
         this.name = name;
@@ -90,8 +91,9 @@ public class Hero implements Serializable {
     }
 
     /**
-     * Methode, mit der der Hero angreifen kann.
-     * @param zufallszahl berechent Zufallszahl zwischen 1 und 100 für Angriffschaden
+     * Methode, mit der der Hero das Alien angreifen kann.
+     * @param alien damit alien Schaden nehmen kann
+     * berechnet Zufallszahl zwischen 1 und 100 für Angriffschaden
      * 13% Chance Angriff schlägt fehl -> kein Schaden
      * 12% guter Treffer -> doppelter Schaden
      * sonst normaler Schaden
@@ -168,6 +170,11 @@ public class Hero implements Serializable {
             return false;
         }
     }
+
+    /**
+     * getter für healthpoints
+     * @return healthpoints
+     */
     public int getHealthPoints() {
         return healthPoints;
     }

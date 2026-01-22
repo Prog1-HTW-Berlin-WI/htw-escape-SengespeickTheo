@@ -1,10 +1,10 @@
 /**
- * 
+ * Unterklasse von Alien
  */
 public class FriendlyAlien extends Alien{
     
     /**
-     * 
+     * Konstruktor für friendlyAlien
      * @param name
      * @param lifePoints
      * @param friendly

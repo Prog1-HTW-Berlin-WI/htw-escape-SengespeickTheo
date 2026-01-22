@@ -12,7 +12,7 @@ import model.HTWRoom;
 
 
 /**
- * 
+ * steuert das Spiel/Spielmenü
  */
 public class EscapeGame {
     private EscapeApp app;
@@ -28,8 +28,10 @@ public class EscapeGame {
     private int rounds = 0;
     private int maxRound = 24;
     private boolean shortRestUsed = false;
+
     /**
-     * initialisiert einen neuen Helden, Lecturer, HTWRooms und Aliens.
+     * initialisiert einen neuen Helden, Lecturer, HTWRooms und Aliens mit deren Eigenschaften.
+     * vorhanden: Lecturer = 5, Rooms = 5, alien = 5
      */
     public EscapeGame(Hero hero, EscapeApp app) {
         this.hero = hero;
@@ -155,7 +157,7 @@ public class EscapeGame {
     }
 
     /**
-    * Anzeige für das Spielmenü und "zurück ins Hauptmenü" 
+    * Anzeige für das Spielmenü und Spieler kann mit Eingabe 4 zurück ins Hauptmenü 
     */
     public void gameMenu() {
         while (true) {
@@ -182,8 +184,10 @@ public class EscapeGame {
     * 1: explore HTW
     * 2: hero status
     * 3: rest:  lange Pause, kurze Pause, oder Quit=zurück ins Spielmenü
+    * -entscheidet ob Spieler noch eine kurze Pause in der Runde machen darf
     * 4: back to main menu
-    * @param input Nutzereingabe
+    * bei falscher Eingabe bekommt der Spieler eine Fehlermeldung
+    * @param input Nutzereingabe für das Spielmenü
     */
     private void handleUserInputGameMenu(String input) {
         switch (input) {
@@ -239,8 +243,10 @@ public class EscapeGame {
 
     /**
     * HTW erkunden: 
+    * wenn hero zu schwach, Meldung dass er sich erst heilen muss
     * zählt wie viele Runden der Spieler schon gespielt hat
-    *Möglichkeit zwischen ereignislos, Alien treffen, Lecturer treffen
+    * Möglichkeit zwischen ereignislos, Alien treffen, Lecturer treffen
+    * wenn Spieler alle Unterschriften hat oder max Runden überschritten hat -> endGame()
     */
     public void exploreHTW() {
         if(hero.getHealthPoints() <= 0) {
@@ -278,7 +284,7 @@ public class EscapeGame {
 
     /**
     * Möglichkeit "ereignislos"
-    * gibt verschiedene Texte aus
+    * gibt zufällig verschiedene Texte aus
     */
     public void eventless() {
         int zufallszahl = (int) (Math.random() * 100) + 1;
@@ -302,6 +308,7 @@ public class EscapeGame {
      * 2 freundliche Aliens und 3 unfreundliche
      * freundliche geben eine kurze Konversation und etwas EP
      * bei unfreundlichen kann man kämpfen (bis einer 0 LP hat) oder fliehen (nur 1 Fluchtversuch)
+     * gibt während dem Kampf LP und Schaden von Alien/Hero an
      * nach einem Kampf gibt es 1EP (verloren) oder 5EP (gewonnen)
      */
     public void meetAlien(){
@@ -527,9 +534,12 @@ public class EscapeGame {
 
     /** Möglichkeit "lecturer treffen"
      * 5 lecturer, alle mit unterschiedlichem Dialog
-     * erst wird geprüft, ob schon unterschrieben
+     * erst wird geprüft, ob schon unterschrieben ist
      * wenn nicht, ob er/sie bereit dazu ist
-     * dann zufällig Unterschrift oder nicht
+     * wenn ja wird unterschrieben
+     * wenn nicht wird dem Spieler vom Lecturer gesagt, dass er später wiederkommen soll
+     * Spieler kann Lecturer mehrfach treffen, wenn er die Unterschrift schon hat, wird ihm gesagt, er soll einen anderen Lecturer finden
+     * danach backToGameMenu()
      */
     public void meetLecturer(){
         int zufallszahl = (int) (Math.random() * 100) + 1;
@@ -655,6 +665,8 @@ public class EscapeGame {
 
     /**
      * Hero Status
+     * gibt Eigenschaften vom Hero an: name, healthpoints, experiencePoints, Anzahl Unterschriften lecturer und der jeweilige name, Anzahl Runden
+     * danach kann Spieler backToGameMenu()
      */
     public void showHeroStatus(){
         int count = 0;
@@ -680,7 +692,7 @@ public class EscapeGame {
     }
 
     /** 
-     * ermöglicht es ins Spielmenü zurückzukehren
+     * ermöglicht es Spieler mit Eingabe (1) ins Spielmenü zurückzukehren
      * nach bspw. "ereignislos"
      */
     public void backToGameMenu() {
@@ -695,8 +707,9 @@ public class EscapeGame {
     }
 
     /**
-     * 
-     * @return
+     * zählt wie viele Unterschriften der Spieler gesammelt hat
+     * @return false wenn spieler noch nicht alle hat
+     * @return true wenn er alle gesammelt hat
      */
     public boolean allSignaturesCollected() {
         for(int i = 0; i < rooms.length ; i++) {
@@ -708,8 +721,13 @@ public class EscapeGame {
     }
 
     /**
-     * 
+     * je nachdem, wie viele Unterschriften der Spieler hat oder wie viele Runden er hat, bekommt er verschiedene Endszenarien
+     * 3 Enden: 
+     * -alle Unterschriften und unter 24 Runden und Frage richtig beantwortet
+     * -alle Unterschriften und unter 24 Runden und Frage falsch beantwortet
+     * -nicht genug Unterschriften und/oder 24 Runden überschritten
      */
+    
     public void endGame() {
         gameFinished = true;
         boolean escaped = false;
@@ -824,6 +842,9 @@ public class EscapeGame {
         }
     } 
 
+    /**
+     * Textausgabe für eins von den Enden von endGame()
+     */
     public void endScene() {
         System.out.println("");
         System.out.println("Prof. Majunkte: 'Good job! Here's the key to unlock the HTW entrance. I have to go now... but before i do that i still have something to do.");

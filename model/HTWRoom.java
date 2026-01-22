@@ -9,7 +9,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * 
+ * Eigenschaften udn Methoden für HTWRoom
  */
 public class HTWRoom implements Serializable {
 
@@ -24,6 +24,9 @@ public class HTWRoom implements Serializable {
 
     /**
      * Konstruktor für HTWRoom
+     * @param identifier
+     * @param description
+     * @param lecturer
      */
     public HTWRoom(String identifier, String description, Lecturer lecturer){
         this.identifier = identifier;

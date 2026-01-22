@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 /**
- * 
+ * Eigenschaften und Methoden von Lecturer
  */
 public class Lecturer implements Serializable {
 
@@ -51,7 +51,7 @@ public class Lecturer implements Serializable {
     }
 
     /**
-     * Methode, die den Laufzettel vom Lecturer unterschreiben lässt.
+     * Methode, die hasSigned auf true setzt
      */
     public boolean sign(){
         return hasSigned = true;

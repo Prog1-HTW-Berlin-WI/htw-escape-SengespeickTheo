@@ -7,7 +7,7 @@ import java.io.Serializable;
 */
 
 /**
- * 
+ * Eigenschaften und Methoden für Alien
  */
 public abstract class Alien implements Serializable{
 
@@ -48,9 +48,10 @@ public abstract class Alien implements Serializable{
     }
 
     /**
-     * 
+     * Methode, mit der Alien den Hero angreift
+     * Sagt, ob kein Treffer oder Treffer landet
      * @param hero
-     * @return
+     * @return verursachten Schaden
      */
     public int attack(Hero hero) {
         int zufallszahl = (int) (Math.random() * 100) + 1;
@@ -63,16 +64,20 @@ public abstract class Alien implements Serializable{
         hero.takeDamage(damage);
         return damage;
     }
-    
-    public int getLifePoints() {
-        return lifePoints;
-    }
 
     /**
-     * 
+     * Methode zum reset von lifepoints (falls Alien schon mal besiegt wurde)
      * @param lifePoints
      */
     public void resetLifePoints(int lifePoints) {
         this.lifePoints = lifePoints;
+    }
+
+    /**
+     * getter für lifepoints
+     * @return lifepoints
+     */
+    public int getLifePoints() {
+        return lifePoints;
     }
 }
