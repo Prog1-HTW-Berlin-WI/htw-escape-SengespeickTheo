@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -104,12 +105,13 @@ public class EscapeApp {
                 if(isGameRunning() == false && hasSavedGame() == false) {
                     System.out.println("Invalid Input. Please choose a given number.");
                 } else {
-                if(this.hasSavedGame()) {
-                    this.deleteGame();
-                }
+                    if(this.hasSavedGame()) {
+                        this.deleteGame();
+                    }
                 }
                 break;
             case "6":
+
                 break;
             default:
                 System.out.println("Invalid input. Please choose a given number.");

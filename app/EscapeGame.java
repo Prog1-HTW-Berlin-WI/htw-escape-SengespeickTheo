@@ -1,8 +1,6 @@
-import model.Hero;
-
 import java.io.Serializable;
 
-import model.HTWRoom;
+
 
 /**
 * Namen der Autoren des Projekts
