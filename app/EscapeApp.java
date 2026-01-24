@@ -111,7 +111,8 @@ public class EscapeApp {
                 }
                 break;
             case "6":
-
+                System.out.println("The program has ended.");
+                System.exit(0);
                 break;
             default:
                 System.out.println("Invalid input. Please choose a given number.");
