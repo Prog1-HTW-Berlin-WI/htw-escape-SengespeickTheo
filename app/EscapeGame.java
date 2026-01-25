@@ -147,9 +147,9 @@ public class EscapeGame {
         }
     }
 
-        /**
-         * getter für IntroGame
-         */
+    /**
+    * getter für IntroGame
+    */
     public void getIntroGame() {
         this.introGame();
     }
@@ -725,7 +725,6 @@ public class EscapeGame {
      * -alle Unterschriften und unter 24 Runden und Frage falsch beantwortet
      * -nicht genug Unterschriften und/oder 24 Runden überschritten
      */
-    
     public void endGame() {
         gameFinished = true;
         boolean escaped = false;
